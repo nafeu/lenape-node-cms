@@ -49,3 +49,5 @@ app.get('/api/test', function(req, res){
 // Application Logic
 // ---------------------------------------------------------------------------
 // ...
+
+module.exports = server
