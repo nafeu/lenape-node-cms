@@ -4,13 +4,27 @@ const app = express()
 const server = require('http').Server(app)
 const bodyParser = require('body-parser')
 const io = require('socket.io')(server)
+const config = require('config')
 
 // ---------------------------------------------------------------------------
 // Configuration
 // ---------------------------------------------------------------------------
 
+const env = process.env.NODE_ENV || 'dev'
+
+console.log(`[ server.js ] Running app in ${env} environment`)
+
+let serverConfig
+
+try {
+  serverConfig = config.get('Server')
+} catch (err) {
+  console.log("[ server.js ] Missing config file")
+  serverConfig = {port: process.env.PORT || 8000}
+}
+
 // Server
-server.listen(process.env.PORT || 8000, function(){
+server.listen(serverConfig.port, function(){
   console.log(`[ server.js ] Listening on port ${server.address().port}`)
 });
 
@@ -22,6 +36,10 @@ io.set('heartbeat interval', 2000)
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')))
+
+if (env === 'dev') {
+
+}
 
 // ---------------------------------------------------------------------------
 // Socket Event Listeners
