@@ -14,6 +14,7 @@ const env = process.env.NODE_ENV || 'dev'
 
 console.log(`[ server.js ] Running app in ${env} environment`)
 
+// Server configs
 let serverConfig
 
 try {
@@ -22,11 +23,6 @@ try {
   console.log("[ server.js ] Missing config file")
   serverConfig = {port: process.env.PORT || 8000}
 }
-
-// Server
-server.listen(serverConfig.port, () => {
-  console.log(`[ server.js ] Listening on port ${server.address().port}`)
-});
 
 // Socket.io configs
 io.set('heartbeat timeout', 4000)
@@ -63,5 +59,12 @@ app.get('/api/test', (req, res) => {
 // Application Logic
 // ---------------------------------------------------------------------------
 // ...
+
+// ---------------------------------------------------------------------------
+// Instantiate Server
+// ---------------------------------------------------------------------------
+server.listen(serverConfig.port, () => {
+  console.log(`[ server.js ] Listening on port ${server.address().port}`)
+});
 
 module.exports = server

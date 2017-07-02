@@ -11,7 +11,6 @@ Node.js v7 or higher
 ### Features
 
 - `mocha` tests with `chai-http` for API testing
-- a config page served at `/config` to easily modify config variables when in dev mode _***work in progress_
 - starter `styles.css` with cross-browser recommended fixes from [html5-boilerplate](https://github.com/h5bp/html5-boilerplate)
 
 ### Installation
