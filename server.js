@@ -24,7 +24,7 @@ try {
 }
 
 // Server
-server.listen(serverConfig.port, function(){
+server.listen(serverConfig.port, () => {
   console.log(`[ server.js ] Listening on port ${server.address().port}`)
 });
 
@@ -37,19 +37,15 @@ app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')))
 
-if (env === 'dev') {
-
-}
-
 // ---------------------------------------------------------------------------
 // Socket Event Listeners
 // ---------------------------------------------------------------------------
 
-io.on('connection', function(socket){
+io.on('connection', (socket) => {
 
   console.log(`[ server.js ] ${socket.id} connected...`)
 
-  socket.on('disconnect', function(){
+  socket.on('disconnect', () => {
     console.log(`[ server.js ] ${socket.id} disconnected...`)
   });
 
@@ -59,7 +55,7 @@ io.on('connection', function(socket){
 // Express API
 // ---------------------------------------------------------------------------
 
-app.get('/api/test', function(req, res){
+app.get('/api/test', (req, res) => {
   res.status(200).send('OK')
 });
 
