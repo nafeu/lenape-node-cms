@@ -12,14 +12,19 @@ const fs = require('fs')
 
 let config
 
-// Server configs
 try {
   config = require('./config');
 } catch (err) {
+  console.log('[ server.js ] Missing config file')
   config = {};
 }
 
+// Environment configs
 const env = process.env.NODE_ENV || 'dev';
+
+console.log(`[ server.js ] Running app in ${env} environment`)
+
+// Server configs
 let serverPort
 
 // Avoid EADDRINUSE in chai-http tests
@@ -33,8 +38,6 @@ server.listen(process.env.PORT || serverPort, () => {
   console.log(`[ server.js ] Listening on port ${server.address().port}`)
 });
 
-console.log(`[ server.js ] Running app in ${env} environment`)
-
 // Socket.io configs
 io.set('heartbeat timeout', 4000)
 io.set('heartbeat interval', 2000)
@@ -43,6 +46,7 @@ io.set('heartbeat interval', 2000)
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')))
+app.set('view engine', 'ejs')
 
 // ---------------------------------------------------------------------------
 // Socket Event Listeners
@@ -68,17 +72,17 @@ app.get('/api/test', (req, res) => {
 });
 
 if (env === 'dev') {
-  app.set('view engine', 'ejs')
   app.get('/config', (req, res) => {
     console.log('[ server.js ] Accessing configs')
     res.render('config', {config: config});
   })
   app.post('/config', (req, res) => {
-    console.log(req.body);
     Object.keys(req.body).forEach(function(item){
-      req.body[item] = parseInt(req.body[item]) || req.body[item]
+      req.body[item] = parseInt(req.body[item], 10) || req.body[item]
     })
-    fs.writeFile('config.js', `module.exports = ${JSON.stringify(req.body, null, 2)}`, (err) => {
+    const configBody = `module.exports = ${JSON.stringify(req.body, null, 2)}`
+
+    fs.writeFile('config.js', configBody, (err) => {
       if (err) {
         res.render('config', {message: err.message});
         throw err

@@ -1,3 +1,3 @@
 module.exports = {
-  "server_port": 8000
+  "SERVER_PORT": 8000
 }
