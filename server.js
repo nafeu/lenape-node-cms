@@ -19,10 +19,17 @@ try {
   config = {};
 }
 
-const env = process.env.NODE_ENV || 'dev'
-const serverPort = process.env.SERVER_PORT || config.SERVER_PORT || 8000
+const env = process.env.NODE_ENV || 'dev';
+let serverPort
 
-server.listen(serverPort, () => {
+// Avoid EADDRINUSE in chai-http tests
+if (process.env.TEST_MODE) {
+  serverPort = 8080
+} else {
+  serverPort = config.SERVER_PORT || 8000
+}
+
+server.listen(process.env.SERVER_PORT || serverPort, () => {
   console.log(`[ server.js ] Listening on port ${server.address().port}`)
 });
 
