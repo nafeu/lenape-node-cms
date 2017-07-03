@@ -4,25 +4,29 @@ const app = express()
 const server = require('http').Server(app)
 const bodyParser = require('body-parser')
 const io = require('socket.io')(server)
-const config = require('config')
+const fs = require('fs')
 
 // ---------------------------------------------------------------------------
 // Configuration
 // ---------------------------------------------------------------------------
 
-const env = process.env.NODE_ENV || 'dev'
-
-console.log(`[ server.js ] Running app in ${env} environment`)
+let config
 
 // Server configs
-let serverConfig
-
 try {
-  serverConfig = config.get('Server')
+  config = require('./config');
 } catch (err) {
-  console.log("[ server.js ] Missing config file")
-  serverConfig = {port: process.env.PORT || 8000}
+  config = {};
 }
+
+const env = process.env.NODE_ENV || 'dev'
+const serverPort = process.env.SERVER_PORT || config.SERVER_PORT || 8000
+
+server.listen(serverPort, () => {
+  console.log(`[ server.js ] Listening on port ${server.address().port}`)
+});
+
+console.log(`[ server.js ] Running app in ${env} environment`)
 
 // Socket.io configs
 io.set('heartbeat timeout', 4000)
@@ -55,6 +59,26 @@ app.get('/api/test', (req, res) => {
   res.status(200).send('OK')
 });
 
+if (env === 'dev') {
+  app.set('view engine', 'ejs')
+  app.get('/config', (req, res) => {
+    console.log('[ server.js ] Accessing configs')
+    res.render('config', {config: config});
+  })
+  app.post('/config', (req, res) => {
+    Object.keys(req.body).forEach(function(item){
+      req.body[item] = parseInt(req.body[item]) || req.body[item]
+    })
+    fs.writeFile('config.js', `module.exports = ${JSON.stringify(req.body)}`, (err) => {
+      if (err) {
+        res.render('config', {message: err.message});
+        throw err
+      }
+    })
+    res.render('config', {message: "Changes saved."});
+  })
+}
+
 // ---------------------------------------------------------------------------
 // Application Logic
 // ---------------------------------------------------------------------------
@@ -63,8 +87,5 @@ app.get('/api/test', (req, res) => {
 // ---------------------------------------------------------------------------
 // Instantiate Server
 // ---------------------------------------------------------------------------
-server.listen(serverConfig.port, () => {
-  console.log(`[ server.js ] Listening on port ${server.address().port}`)
-});
 
 module.exports = server

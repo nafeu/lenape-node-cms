@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Application Configs </title>
+  <style type="text/css">
+    body {
+      padding: 4% 10% 0% 10%;
+      text-align: center;
+      background-color: #ecf0f1;
+      color: #22313f;
+      font-family: "Helvatica", sans-serif;
+      font-size: 1.2em;
+    }
+    a {
+      text-decoration:  none;
+    }
+    input {
+      margin: 4%;
+      font-size: 1.2em;
+      background-color: #ecf0f1;
+      border: 0;
+      border-bottom: 2px solid #22313f;
+    }
+    input:focus {
+      outline: none;
+    }
+    .message {
+      color: #6C7A89;
+    }
+    .submit {
+      cursor: pointer;
+    }
+    .submit:hover {
+      opacity: 0.5;
+    }
+  </style>
+</head>
+<body>
+  <h1>Application Configs</h1>
+  <% if (locals.config) { %>
+    <form method="POST">
+      <table align="center">
+        <thead>
+          <tr>
+            <th>Key</th>
+            <th>Value</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% Object.keys(config).forEach(function(item){ %>
+            <tr>
+              <td><%= item %></td>
+              <td><input name="<%= item %>" value="<%= config[item] %>" type="text"/></td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+      <input class="submit" type="submit">
+    </form>
+  <% } %>
+  <% if (locals.message) { %>
+    <h2 class="message"><%= message %></h2>
+    <h4>Please use <strong>nodemon</strong> or restart server to continue...</h4>
+    <a href="/config">[ continue editing ]</a>
+  <% } %>
+</body>
+</html>
