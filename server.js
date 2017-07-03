@@ -29,7 +29,7 @@ if (process.env.TEST_MODE) {
   serverPort = config.SERVER_PORT || 8000
 }
 
-server.listen(process.env.SERVER_PORT || serverPort, () => {
+server.listen(process.env.PORT || serverPort, () => {
   console.log(`[ server.js ] Listening on port ${server.address().port}`)
 });
 
@@ -50,6 +50,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 io.on('connection', (socket) => {
 
+  socket.emit('new connection', {id: socket.id, connected: socket.connected})
   console.log(`[ server.js ] ${socket.id} connected...`)
 
   socket.on('disconnect', () => {
