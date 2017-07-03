@@ -66,10 +66,11 @@ if (env === 'dev') {
     res.render('config', {config: config});
   })
   app.post('/config', (req, res) => {
+    console.log(req.body);
     Object.keys(req.body).forEach(function(item){
       req.body[item] = parseInt(req.body[item]) || req.body[item]
     })
-    fs.writeFile('config.js', `module.exports = ${JSON.stringify(req.body)}`, (err) => {
+    fs.writeFile('config.js', `module.exports = ${JSON.stringify(req.body, null, 2)}`, (err) => {
       if (err) {
         res.render('config', {message: err.message});
         throw err
