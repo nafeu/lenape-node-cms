@@ -5,6 +5,7 @@ const server = require('http').Server(app)
 const bodyParser = require('body-parser')
 const io = require('socket.io')(server)
 const fs = require('fs')
+const api = require('./components/api')
 
 // ---------------------------------------------------------------------------
 // Configuration
@@ -47,6 +48,7 @@ app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')))
 app.set('view engine', 'ejs')
+app.use('/api', api)
 
 // ---------------------------------------------------------------------------
 // Socket Event Listeners
@@ -64,12 +66,8 @@ io.on('connection', (socket) => {
 });
 
 // ---------------------------------------------------------------------------
-// Express API
+// Config Page
 // ---------------------------------------------------------------------------
-
-app.get('/api/test', (req, res) => {
-  res.status(200).send('OK')
-});
 
 if (env === 'dev') {
   console.log('[ server.js ] Serving config page at /config')
@@ -92,14 +90,5 @@ if (env === 'dev') {
     res.render('config', {message: "Changes saved."});
   })
 }
-
-// ---------------------------------------------------------------------------
-// Application Logic
-// ---------------------------------------------------------------------------
-// ...
-
-// ---------------------------------------------------------------------------
-// Instantiate Server
-// ---------------------------------------------------------------------------
 
 module.exports = server
