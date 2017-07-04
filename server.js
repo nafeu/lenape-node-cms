@@ -63,7 +63,7 @@ if (env === 'dev') {
     res.render('config', {config: config});
   })
   app.post('/config', (req, res) => {
-    Object.keys(req.body).forEach(function(item){
+    Object.keys(req.body).forEach((item) => {
       req.body[item] = parseInt(req.body[item], 10) || req.body[item]
     })
     const configBody = `module.exports = ${JSON.stringify(req.body, null, 2)}`

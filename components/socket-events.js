@@ -4,7 +4,7 @@
 
 module.exports = {
 
-  "use": function(io) {
+  "use": (io) => {
     io.on('connection', (socket) => {
 
       socket.emit('new connection', {id: socket.id, connected: socket.connected})

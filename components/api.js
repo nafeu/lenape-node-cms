@@ -5,9 +5,9 @@ const router = express.Router()
 // Express API
 // ---------------------------------------------------------------------------
 
-module.exports = function(io) {
+module.exports = (io) => {
 
-  router.use(function(req, res, next) {
+  router.use((req, res, next) => {
     const time = new Date().toTimeString()
     const {method, url} = req
     const {statusCode} = res
@@ -16,7 +16,7 @@ module.exports = function(io) {
     next()
   })
 
-  router.get('/test', function (req, res) {
+  router.get('/test', (req, res) => {
     res.status(200).send('OK')
   })
 
