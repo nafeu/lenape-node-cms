@@ -1,6 +1,10 @@
 const express = require('express')
 const router = express.Router()
 
+// ---------------------------------------------------------------------------
+// Express API
+// ---------------------------------------------------------------------------
+
 router.use(function(req, res, next) {
   const time = new Date().toTimeString()
   const {method, url} = req
