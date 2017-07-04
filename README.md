@@ -10,8 +10,8 @@ Node.js v7 or higher
 
 ### Features
 
-- `mocha` tests with `chai-http` for API testing
-- a config page served at `/config` to easily modify config variables when in dev mode _***work in progress_
+- `mocha` tests with `chai-http` for API and socket.io interaction testing
+- a config page served at `/config` to easily modify config variables when in dev mode
 - starter `styles.css` with cross-browser recommended fixes from [html5-boilerplate](https://github.com/h5bp/html5-boilerplate)
 
 ### Installation
@@ -24,7 +24,15 @@ npm install
 
 ### Development / Basic Usage
 
-Run `node server.js` and go to `http://localhost:8000/` in a web browser.
+```
+npm install -g nodemon
+cp sample-config.js config.js
+nodemon server.js
+```
+
+If you don't want to use [`nodemon`](https://github.com/remy/nodemon) you can also just run `node server.js` and omit the `nodemon` installation.
+
+Go to `http://localhost:8000/` in a web browser.
 
 #### Running Tests
 
