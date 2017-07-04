@@ -6,6 +6,7 @@ const bodyParser = require('body-parser')
 const io = require('socket.io')(server)
 const fs = require('fs')
 const api = require('./components/api')
+const socketEvents = require('./components/socket-events')
 
 // ---------------------------------------------------------------------------
 // Configuration
@@ -39,10 +40,6 @@ server.listen(process.env.PORT || serverPort, () => {
   console.log(`[ server.js ] Listening on port ${server.address().port}`)
 });
 
-// Socket.io configs
-io.set('heartbeat timeout', 4000)
-io.set('heartbeat interval', 2000)
-
 // Express server configs
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.json());
@@ -50,20 +47,10 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.set('view engine', 'ejs')
 app.use('/api', api)
 
-// ---------------------------------------------------------------------------
-// Socket Event Listeners
-// ---------------------------------------------------------------------------
-
-io.on('connection', (socket) => {
-
-  socket.emit('new connection', {id: socket.id, connected: socket.connected})
-  console.log(`[ server.js ] ${socket.id} connected...`)
-
-  socket.on('disconnect', () => {
-    console.log(`[ server.js ] ${socket.id} disconnected...`)
-  });
-
-});
+// Socket.io configs
+io.set('heartbeat timeout', 4000)
+io.set('heartbeat interval', 2000)
+socketEvents.connect(io)
 
 // ---------------------------------------------------------------------------
 // Config Page
