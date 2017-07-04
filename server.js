@@ -72,6 +72,7 @@ app.get('/api/test', (req, res) => {
 });
 
 if (env === 'dev') {
+  console.log('[ server.js ] Serving config page at /config')
   app.get('/config', (req, res) => {
     console.log('[ server.js ] Accessing configs')
     res.render('config', {config: config});
