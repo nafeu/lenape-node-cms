@@ -2,7 +2,7 @@
 // Socket Events
 // ---------------------------------------------------------------------------
 
-module.exports = {
+socketEvents = {
 
   "connect": function(io) {
     io.on('connection', (socket) => {
@@ -18,3 +18,5 @@ module.exports = {
   }
 
 };
+
+module.exports = socketEvents
