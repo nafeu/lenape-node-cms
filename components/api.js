@@ -5,17 +5,20 @@ const router = express.Router()
 // Express API
 // ---------------------------------------------------------------------------
 
-router.use(function(req, res, next) {
-  const time = new Date().toTimeString()
-  const {method, url} = req
-  const {statusCode} = res
+module.exports = function(io) {
 
-  console.log(`[ api.js - ${statusCode} ] ${method} ${url} : ${time}`)
-  next()
-})
+  router.use(function(req, res, next) {
+    const time = new Date().toTimeString()
+    const {method, url} = req
+    const {statusCode} = res
 
-router.get('/test', function (req, res) {
-  res.status(200).send('OK')
-})
+    console.log(`[ api.js - ${statusCode} ] ${method} ${url} : ${time}`)
+    next()
+  })
 
-module.exports = router
+  router.get('/test', function (req, res) {
+    res.status(200).send('OK')
+  })
+
+  return router
+}

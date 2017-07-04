@@ -2,9 +2,9 @@
 // Socket Events
 // ---------------------------------------------------------------------------
 
-socketEvents = {
+module.exports = {
 
-  "connect": function(io) {
+  "use": function(io) {
     io.on('connection', (socket) => {
 
       socket.emit('new connection', {id: socket.id, connected: socket.connected})
@@ -18,5 +18,3 @@ socketEvents = {
   }
 
 };
-
-module.exports = socketEvents

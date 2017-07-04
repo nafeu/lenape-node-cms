@@ -5,7 +5,7 @@ const server = require('http').Server(app)
 const bodyParser = require('body-parser')
 const io = require('socket.io')(server)
 const fs = require('fs')
-const api = require('./components/api')
+const api = require('./components/api')(io)
 const socketEvents = require('./components/socket-events')
 
 // ---------------------------------------------------------------------------
@@ -40,17 +40,17 @@ server.listen(process.env.PORT || serverPort, () => {
   console.log(`[ server.js ] Listening on port ${server.address().port}`)
 });
 
+// Socket.io configs
+io.set('heartbeat timeout', 4000)
+io.set('heartbeat interval', 2000)
+socketEvents.use(io)
+
 // Express server configs
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')))
 app.set('view engine', 'ejs')
 app.use('/api', api)
-
-// Socket.io configs
-io.set('heartbeat timeout', 4000)
-io.set('heartbeat interval', 2000)
-socketEvents.connect(io)
 
 // ---------------------------------------------------------------------------
 // Config Page
