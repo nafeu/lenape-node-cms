@@ -48,34 +48,15 @@ socketEvents.use(io)
 // Express server configs
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.json());
-app.use(express.static(path.join(__dirname, 'public')))
-app.set('view engine', 'ejs')
 app.use('/api', api)
+
+app.get('/', function (req, res) {
+  res.status(200).send('OK')
+})
 
 // ---------------------------------------------------------------------------
 // Config Page
 // ---------------------------------------------------------------------------
 
-if (env === 'dev') {
-  console.log('[ server.js ] Serving config page at /config')
-  app.get('/config', (req, res) => {
-    console.log('[ server.js ] Accessing configs')
-    res.render('config', {config: config});
-  })
-  app.post('/config', (req, res) => {
-    Object.keys(req.body).forEach((item) => {
-      req.body[item] = parseInt(req.body[item], 10) || req.body[item]
-    })
-    const configBody = `module.exports = ${JSON.stringify(req.body, null, 2)}`
-
-    fs.writeFile('config.js', configBody, (err) => {
-      if (err) {
-        res.render('config', {message: err.message});
-        throw err
-      }
-    })
-    res.render('config', {message: "Changes saved."});
-  })
-}
 
 module.exports = server
