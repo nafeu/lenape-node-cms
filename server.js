@@ -48,11 +48,8 @@ socketEvents.use(io)
 // Express server configs
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.json());
+app.use(express.static(__dirname + '/client'))
 app.use('/api', api)
-
-app.get('/', function (req, res) {
-  res.status(200).send('OK')
-})
 
 // ---------------------------------------------------------------------------
 // Config Page
