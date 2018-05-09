@@ -101,6 +101,9 @@ angular.module('myApp.home', ['ngRoute'])
         audio.controls = true;
         var blob = new Blob(chunks, { 'type' : 'audio/ogg; codecs=opus' });
         chunks = [];
+        apiService.uploadAudio(blob).then(function(res){
+          console.log(res);
+        });
         var audioURL = window.URL.createObjectURL(blob);
         audio.src = audioURL;
         console.log("recorder stopped");
