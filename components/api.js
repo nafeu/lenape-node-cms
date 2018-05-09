@@ -1,8 +1,17 @@
 const express = require('express')
 const router = express.Router()
-const mongoDB = 'mongodb://127.0.0.1/my_database'
 const mongoose = require('mongoose')
 const Word = require('../models/word');
+let config
+
+try {
+  config = require('../config');
+} catch (err) {
+  console.log('[ server.js ] Missing config file')
+  config = {};
+}
+
+const mongoDB = process.env.DB_URI || config.DB_URI
 
 // ---------------------------------------------------------------------------
 // Express API

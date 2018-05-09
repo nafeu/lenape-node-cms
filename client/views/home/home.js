@@ -26,6 +26,8 @@ angular.module('myApp.home', ['ngRoute'])
   apiService.getWords().then(function(res){
     console.log(res.data);
     $scope.words = res.data;
-  })
+  }, function(res){
+    alert(res);
+  });
 
 }]);
