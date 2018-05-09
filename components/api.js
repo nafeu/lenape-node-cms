@@ -43,5 +43,17 @@ module.exports = (io) => {
 
   })
 
+  router.get('/word', (req, res) => {
+    Word.find({}, function(err, words) {
+      var wordMap = {};
+
+      words.forEach(function(word) {
+        wordMap[word._id] = word;
+      });
+
+      res.send(wordMap);
+    })
+  })
+
   return router
 }
