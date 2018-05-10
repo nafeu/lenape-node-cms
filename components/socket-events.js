@@ -10,7 +10,11 @@ module.exports = {
     io.on('connection', (socket) => {
 
       socket.emit('new connection', {id: socket.id, connected: socket.connected})
-      socket.emit('getLastCanvasState', lastCanvasState);
+
+      socket.on('getLastCanvasState', function(){
+        socket.emit('getLastCanvasState', lastCanvasState);
+      });
+
       console.log(`[ socket-events.js ] ${socket.id} connected...`)
 
       socket.on('disconnect', () => {

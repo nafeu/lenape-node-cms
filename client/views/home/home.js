@@ -172,6 +172,8 @@ angular.module('myApp.home', ['ngRoute'])
 
     socket.on('drawing', onDrawingEvent);
 
+    socket.emit('getLastCanvasState');
+
     socket.on('getLastCanvasState', function(data){
       var img=new Image();
       img.src=data;
