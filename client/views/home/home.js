@@ -151,6 +151,9 @@ angular.module('myApp.home', ['ngRoute'])
     var inMemCanvas = document.createElement('canvas');
     var inMemCtx = inMemCanvas.getContext('2d');
 
+    var exportCanvas = document.createElement('canvas');
+    var exportCtx = exportCanvas.getContext('2d');
+
     var current = {
       color: 'black'
     };
@@ -168,6 +171,18 @@ angular.module('myApp.home', ['ngRoute'])
     }
 
     socket.on('drawing', onDrawingEvent);
+
+    socket.on('getLastCanvasState', function(data){
+      var img=new Image();
+      img.src=data;
+      setTimeout(function(){
+        console.log("drawing...");
+        context.drawImage(img, 0, 0, canvas.width, canvas.height);
+      }, 1000);
+      // var img=new Image();
+      // img.src=theDataURL;
+      // context.drawImage(img,0,0);
+    })
 
     window.addEventListener('resize', onResize, false);
     onResize();
@@ -193,8 +208,6 @@ angular.module('myApp.home', ['ngRoute'])
         y1: y1 / h,
         color: color
       });
-
-      socket.emit('lastDrawing', )
     }
 
     var scale = window.innerWidth / canvas.getBoundingClientRect().width;
@@ -212,6 +225,7 @@ angular.module('myApp.home', ['ngRoute'])
       drawing = false;
       var rect = canvas.getBoundingClientRect();
       drawLine(current.x, current.y, (e.clientX - rect.left) * scale, (e.clientY - rect.top) * scale, current.color, true);
+      socket.emit('setLastCanvasState', exportCanvasState());
     }
 
     function onMouseMove(e){
@@ -254,6 +268,14 @@ angular.module('myApp.home', ['ngRoute'])
       canvas.height = window.innerHeight;
       context.drawImage(inMemCanvas, 0, 0, canvas.width, canvas.height);
       scale = window.innerWidth / canvas.getBoundingClientRect().width
+    }
+
+    function exportCanvasState() {
+      exportCanvas.width = canvas.width / 3;
+      exportCanvas.height = canvas.height / 3;
+      exportCtx.drawImage(canvas, 0, 0, exportCanvas.width, exportCanvas.height);
+      console.log(exportCanvas.toDataURL());
+      return exportCanvas.toDataURL();
     }
 
   })();
