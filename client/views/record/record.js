@@ -22,6 +22,40 @@ angular.module('myApp.record', ['ngRoute'])
     color: "white"
   };
 
+  $scope.setTool = function(setting) {
+    switch(setting) {
+      case "white":
+        $scope.chalk.lineWidth = 4;
+        $scope.chalk.color = "white";
+        break;
+      case "blue":
+        $scope.chalk.lineWidth = 4;
+        $scope.chalk.color = "blue";
+        break;
+      case "green":
+        $scope.chalk.lineWidth = 4;
+        $scope.chalk.color = "green";
+        break;
+      case "red":
+        $scope.chalk.lineWidth = 4;
+        $scope.chalk.color = "red";
+        break;
+      case "yellow":
+        $scope.chalk.lineWidth = 4;
+        $scope.chalk.color = "yellow";
+        break;
+      case "eraser":
+        $scope.chalk.lineWidth = 30;
+        $scope.chalk.color = "black";
+        break;
+      default:
+        break;
+    }
+  }
+
+  $scope.recording = false;
+  $scope.recordingCounter = 15;
+
   $scope.createWord = function(){
     apiService.uploadAudio($scope.blob).then(function(res){
       alert(JSON.stringify(res));
@@ -62,21 +96,11 @@ angular.module('myApp.record', ['ngRoute'])
       var mediaRecorder = new MediaRecorder(stream);
 
       record.onclick = function() {
-        mediaRecorder.start();
-        record.style.borderColor = "red";
-
-        stop.disabled = false;
-        record.disabled = true;
+        startRecording();
       }
 
       stop.onclick = function() {
-        mediaRecorder.stop();
-        record.style.borderColor = "";
-        record.style.color = "";
-        // mediaRecorder.requestData();
-
-        stop.disabled = true;
-        record.disabled = false;
+        stopRecording();
       }
 
       mediaRecorder.onstop = function(e) {
@@ -84,6 +108,39 @@ angular.module('myApp.record', ['ngRoute'])
         var audio = document.querySelector('#audio-player');
         audio.src = window.URL.createObjectURL($scope.blob);
         chunks = [];
+      }
+
+      function startRecording() {
+        $scope.recording = true;
+        mediaRecorder.start();
+        record.style.borderColor = "red";
+
+        stop.disabled = false;
+        record.disabled = true;
+        checkRecording();
+      }
+
+      function checkRecording() {
+        setTimeout(function(){
+          if ($scope.recording == true && $scope.recordingCounter > 1) {
+            $scope.recordingCounter--;
+            checkRecording();
+          } else if ($scope.recording == true) {
+            stopRecording();
+          }
+        }, 1000)
+      }
+
+      function stopRecording() {
+        $scope.recording = false;
+        $scope.recordingCounter = 15;
+        mediaRecorder.stop();
+        record.style.borderColor = "";
+        record.style.color = "";
+        // mediaRecorder.requestData();
+
+        stop.disabled = true;
+        record.disabled = false;
       }
 
       mediaRecorder.ondataavailable = function(e) {

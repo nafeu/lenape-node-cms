@@ -94,22 +94,20 @@
     <div class="col-md-8">
       <canvas class="chalkboard"></canvas>
     </div>
-    <div class="col-md-4 snapshot-container" style="max-height: 200px;">
+    <div class="col-md-4 snapshot-container" style="max-height: 400px;">
       <img class="snapshot-img" ng-repeat="snapshot in snapshots" ng-src="{{snapshot}}">
     </div>
   </div>
   <div class="row mb-3">
     <div class="col-md-8">
       <div class="btn-group" role="group" aria-label="Basic example">
-        <button type="button" ng-click="takeSnapshot()" class="btn btn-secondary"><i class="fa fa-camera"></i> Take Snapshot</button>
-<!--         <button><i class="fa-paint-brush"></i></button>
-        <div class="colors">
-          <div class="color white"></div>
-          <div class="color red"></div>
-          <div class="color green"></div>
-          <div class="color blue"></div>
-          <div class="color yellow"></div>
-        </div> -->
+        <button type="button" ng-click="takeSnapshot()" class="btn btn-dark"><i class="fa fa-camera"></i> Take Snapshot</button>
+        <button ng-click="setTool('white')" class="btn btn-dark"><i class="fa fa-circle"></i></button>
+        <button ng-click="setTool('blue')" class="btn btn-outline-primary"><i class="fa fa-circle"></i></button>
+        <button ng-click="setTool('green')" class="btn btn-outline-success"><i class="fa fa-circle"></i></button>
+        <button ng-click="setTool('red')" class="btn btn-outline-danger"><i class="fa fa-circle"></i></button>
+        <button ng-click="setTool('yellow')" class="btn btn-outline-warning"><i class="fa fa-circle"></i></button>
+        <button ng-click="setTool('eraser')" class="btn btn-dark"><i class="fa fa-eraser"></i></button>
       </div>
     </div>
     <div class="col-md-4">
