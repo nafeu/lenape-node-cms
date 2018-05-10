@@ -45,6 +45,12 @@
 
 </style>
 
+<ul class="nav">
+  <li class="nav-item">
+    <a class="nav-link active" href="#!/record">Go Back</a>
+  </li>
+</ul>
+
 <div class="view-container">
 
   <h3>Add New Lexical Entries</h3>
@@ -53,7 +59,8 @@
   <div class="row justify-content-center">
     <div class="col-md-6 text-center">
       <p>English Word:</p>
-      <h1>"Word"</h1>
+      <h1>"{{englishName}}"</h1>
+      <h4>{{definition}}</h4>
     </div>
   </div>
 
@@ -122,11 +129,8 @@
     <textarea type="text" class="form-control" placeholder="Add any additional notes" ng-model="notes"></textarea>
   </div>
 
-
-  <input ng-hide="true" type="number" min="1" max="20" ng-model="chalk.lineWidth">
-
   <button class="btn btn-lg btn-outline-danger mr-2" >Cancel</button>
-  <button class="btn btn-lg btn-outline-success" ng-click="createWord()">Save</button>
+  <button class="btn btn-lg btn-outline-success" ng-click="saveWord()">Save</button>
   <br>
 
 </div>

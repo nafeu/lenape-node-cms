@@ -1,5 +1,49 @@
-<p>analyze</p>
+<style type="text/css">
 
-<ul>
-  <li ng-repeat="word in words"><a href="#!/analyze/{{word._id}}">{{word.name}}</a></li>
+.view-container {
+  padding: 20px;
+  border: 1px solid black;
+  border-radius: 5px;
+}
+
+</style>
+
+<ul class="nav">
+  <li class="nav-item">
+    <a class="nav-link active" href="#!/home">Go Back</a>
+  </li>
 </ul>
+
+<div class="view-container">
+  <h3>Process Translated Words</h3>
+  <hr>
+
+  <div class="row">
+    <div class="col-md-6">
+      <h4>Queue</h4>
+      <p>The following words require processing:</p>
+      <div ng-repeat="word in words" ng-show="!word.isProcessed" class="card mb-3">
+        <div class="card-body">
+          <h5 class="card-title">{{word.englishName}} / {{word.name}}</h5>
+          <h6 class="card-subtitle mb-2 text-muted">{{word.definition}}</h6>
+          <p class="card-text">{{word.notes}}</p>
+          <a href="#!/analyze/{{word._id}}" class="card-link">Process</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <h4>Processed</h4>
+      <p>The following words have been processed but can be edited:</p>
+      <div ng-repeat="word in words" ng-show="word.isProcessed" class="card mb-3">
+        <div class="card-body">
+          <h5 class="card-title">{{word.englishName}} / {{word.name}}</h5>
+          <h6 class="card-subtitle mb-2 text-muted">{{word.definition}}</h6>
+          <p class="card-text">{{word.notes}}</p>
+          <a href="#!/analyze/{{word._id}}" class="card-link">Edit</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</div>

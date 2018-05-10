@@ -1,0 +1,38 @@
+<style type="text/css">
+
+.view-container {
+  padding: 20px;
+  border: 1px solid black;
+  border-radius: 5px;
+}
+
+</style>
+
+<ul class="nav">
+  <li class="nav-item">
+    <a class="nav-link active" href="#!/home">Go Back</a>
+  </li>
+</ul>
+
+<div class="view-container">
+  <h3>Interpret English Words</h3>
+  <hr>
+
+  <div class="btn-group mb-4" role="group" aria-label="Basic example">
+    <button ng-click="go('/new')" type="button" class="btn btn-info btn-lg">Add New English Word</button>
+  </div>
+
+
+  <h4>Translation Queue</h4>
+  <p>The following words require translation:</p>
+
+  <div ng-repeat="word in words" ng-show="!word.isQueued" class="card mb-3">
+    <div class="card-body">
+      <h5 class="card-title">{{word.englishName}}</h5>
+      <h6 class="card-subtitle mb-2 text-muted">{{word.definition}}</h6>
+      <p class="card-text">{{word.notes}}</p>
+      <a href="#!/record/{{word._id}}" class="card-link">Translate</a>
+    </div>
+  </div>
+
+</div>

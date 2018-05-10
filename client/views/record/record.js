@@ -3,19 +3,71 @@
 angular.module('myApp.record', ['ngRoute'])
 
 .config(['$routeProvider', function($routeProvider) {
-  $routeProvider.when('/record', {
+  $routeProvider.when('/record/:word_id', {
     templateUrl: 'views/record/recordDetail.html',
+    controller: 'RecordDetailCtrl'
+  });
+
+  $routeProvider.when('/record', {
+    templateUrl: 'views/record/record.html',
     controller: 'RecordCtrl'
+  });
+
+  $routeProvider.when('/new', {
+    templateUrl: 'views/record/recordNew.html',
+    controller: 'RecordNewCtrl'
   });
 }])
 
-.controller('RecordCtrl', ['$scope', 'apiService', 'storageService', function($scope, apiService, storageService) {
-  $scope.name = "";
-  $scope.audioId = "";
+.controller('RecordCtrl', ['$scope', 'apiService', '$location', function($scope, apiService, $location) {
+
+  $scope.words = [];
+
+  $scope.go = function ( path ) {
+    $location.path( path );
+  };
+
+  apiService.getAllWords().then(function(res){
+    console.log("retrieving all words...");
+    console.log(res.data);
+    $scope.words = res.data;
+  })
+}])
+
+.controller('RecordNewCtrl', ['$scope', 'apiService', '$location', function($scope, apiService, $location) {
+  $scope.englishName = "";
+  $scope.definition = "";
   $scope.notes = "";
 
+  $scope.createWord = function(){
+    var payload = {
+      englishName: $scope.englishName,
+      definition: $scope.definition,
+      notes: $scope.notes
+    };
+    apiService.createWord(payload).then(function(res){
+      alert(res.data.message);
+      $location.path('/record');
+    })
+  }
+}])
+
+.controller('RecordDetailCtrl', ['$scope', 'apiService', 'storageService', '$routeParams', '$location', function($scope, apiService, storageService, $routeParams, $location) {
+  $scope.wordId = $routeParams.word_id;
+  $scope.name = "";
+  $scope.definition = "";
+  $scope.englishName = "";
+  $scope.audioId = "";
+  $scope.notes = "";
   $scope.snapshots = [];
   $scope.snapshotIds = [];
+
+  apiService.getWord($scope.wordId).then(function(res){
+    $scope.name = res.data.name;
+    $scope.definition = res.data.definition;
+    $scope.englishName = res.data.englishName;
+    $scope.notes = res.data.notes;
+  })
 
   $scope.blob;
   $scope.chalk = {
@@ -57,17 +109,19 @@ angular.module('myApp.record', ['ngRoute'])
   $scope.recording = false;
   $scope.recordingCounter = 15;
 
-  $scope.createWord = function(){
+  $scope.saveWord = function(){
     apiService.uploadAudio($scope.blob).then(function(res){
-      alert(JSON.stringify(res));
       $scope.audioId = res.audioId;
       var payload = {
+        wordId: $scope.wordId,
         name: $scope.name,
         audioId: $scope.audioId,
-        snapshotIds: $scope.snapshotIds
+        snapshotIds: $scope.snapshotIds,
+        isQueued: true,
+        isProcessed: false
       };
-      apiService.createWord(payload).then(function(res){
-        alert(JSON.stringify(res));
+      apiService.saveWord(payload).then(function(res){
+        $location.path('/record');
       })
     });
   }

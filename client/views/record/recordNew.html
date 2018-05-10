@@ -1,0 +1,45 @@
+<style type="text/css">
+
+.view-container {
+  padding: 20px;
+  border: 1px solid black;
+  border-radius: 5px;
+}
+
+</style>
+
+<ul class="nav">
+  <li class="nav-item">
+    <a class="nav-link active" href="#!/record">Go Back</a>
+  </li>
+</ul>
+
+<div class="view-container">
+  <h3>Add New English Words</h3>
+  <hr>
+
+  <div class="input-group mb-3 input-group-lg">
+    <div class="input-group-prepend">
+      <span class="input-group-text">Word</span>
+    </div>
+    <input type="text" class="form-control" placeholder="Enter a new English word" ng-model="englishName">
+  </div>
+
+  <div class="input-group mb-3 input-group-lg">
+    <div class="input-group-prepend">
+      <span class="input-group-text">Definition</span>
+    </div>
+    <input type="text" class="form-control" placeholder="Enter the definition" ng-model="definition">
+  </div>
+
+  <div class="input-group mb-3 input-group-lg">
+    <div class="input-group-prepend">
+      <span class="input-group-text">Notes</span>
+    </div>
+    <textarea class="form-control" placeholder="Add any additional notes" ng-model="notes"></textarea>
+  </div>
+
+  <button class="btn btn-lg btn-outline-danger mr-2" >Cancel</button>
+  <button class="btn btn-lg btn-outline-success" ng-click="createWord()">Save</button>
+
+</div>

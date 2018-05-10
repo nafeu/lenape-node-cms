@@ -6,7 +6,12 @@ app.service('apiService', function($http) {
   }
 
   this.createWord = function(payload) {
-    var url = "/api/word";
+    var url = "/api/word/create";
+    return $http.post(url, payload);
+  }
+
+  this.saveWord = function(payload) {
+    var url = "/api/word/update";
     return $http.post(url, payload);
   }
 

@@ -49,19 +49,39 @@ module.exports = (io) => {
     res.status(200).send('OK')
   })
 
-  router.post('/word', (req, res) => {
-
+  router.post('/word/create', (req, res) => {
     var word = new Word();
-    word.name = req.body.name;
-    word.audioId = req.body.audioId;
-    word.snapshotIds = req.body.snapshotIds;
+    word.englishName = req.body.englishName;
+    word.definition = req.body.definition;
+    word.notes = req.body.notes;
 
     // save the word and check for errors
     word.save(function(err) {
         if (err)
             res.send(err);
 
-        res.json({ message: 'Word created!' });
+        res.json({ message: 'Word entry created successfully!' });
+    });
+  })
+
+  router.post('/word/update', (req, res) => {
+    var id = req.body.wordId;
+
+    Word.findById(id, function(err, word){
+      word.name = req.body.name;
+      word.audioId = req.body.audioId;
+      word.snapshotIds = req.body.snapshotIds;
+      word.notes = req.body.notes;
+      word.isQueued = req.body.isQueued;
+      word.isProcessed = req.body.isProcessed;
+
+      // save the word and check for errors
+      word.save(function(err) {
+          if (err)
+              res.send(err);
+
+          res.json({ message: 'Word entry has been updated successfully!' });
+      });
     });
 
   })
