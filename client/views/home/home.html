@@ -8,20 +8,46 @@
   }
 
   .link-title {
-    font-size: 3em;
+    font-size: 2em;
   }
+
+  .jumbotron {
+    margin-bottom: 0;
+    background-color: #006266;
+    color: white;
+  }
+
+  .card {
+    border: 1px solid #006266;
+    border-radius: 5px;
+    color: #006266;
+    cursor: pointer;
+    transition: 200ms ease-in-out all;
+  }
+
+  .card:hover {
+    color: #ED4C67;
+    border: 1px solid #ED4C67;
+  }
+
+  .card:active {
+    background-color: #ED4C67;
+    color: white;
+  }
+
+
 </style>
 
 <div class="jumbotron jumbotron-fluid">
   <div class="container">
     <h1 class="display-4">Lenape Lexicon Builder</h1>
-    <p class="lead">Welcome to the lexicon builder, a modern toolset for language preservation.</p>
+    <p class="lead">Welcome to the lexicon builder, a modern toolset for Lunáapeew language preservation.</p>
   </div>
 </div>
 
 <div id="main" class="row justify-content-center">
-  <div ng-click="go('/record')" class="col-md-4">
-    <div class="card">
+  <div class="col-md-4 mt-4">
+    <div ng-click="go('/record')" class="card">
       <div class="card-body text-center">
         <div class="link-title">Record</div>
         <i class="mt-2 fa fa-microphone"></i>
@@ -29,8 +55,8 @@
       </div>
     </div>
   </div>
-  <div ng-click="go('/analyze')" class="col-md-4">
-    <div class="card">
+  <div class="col-md-4 mt-4">
+    <div ng-click="go('/analyze')" class="card">
       <div class="card-body text-center">
         <div class="link-title">Analyze</div>
         <i class="mt-2 fa fa-edit"></i>
@@ -38,8 +64,8 @@
       </div>
     </div>
   </div>
-  <div ng-click="go('/collaborate')" class="col-md-4">
-    <div class="card">
+  <div class="col-md-4 mt-4">
+    <div ng-click="go('/collaborate')" class="card">
       <div class="card-body text-center">
         <div class="link-title">Collaborate</div>
         <i class="mt-2 fa fa-users"></i>
