@@ -1,3 +1,50 @@
-<a href="#!/record">record</a>
-<a href="#!/analyze">analyze</a>
-<a href="#!/collaborate">collaborate</a>
+<!-- <a href="#!/record">record</a> -->
+<!-- <a href="#!/analyze">analyze</a> -->
+<!-- <a href="#!/collaborate">collaborate</a> -->
+
+<style type="text/css">
+  .fa {
+    font-size: 4em;
+  }
+
+  .link-title {
+    font-size: 3em;
+  }
+</style>
+
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <h1 class="display-4">Lenape Lexicon Builder</h1>
+    <p class="lead">Welcome to the lexicon builder, a modern toolset for language preservation.</p>
+  </div>
+</div>
+
+<div id="main" class="row justify-content-center">
+  <div ng-click="go('/record')" class="col-md-4">
+    <div class="card">
+      <div class="card-body text-center">
+        <div class="link-title">Record</div>
+        <i class="mt-2 fa fa-microphone"></i>
+        <p class="mt-4">Build new lexical entries, record audio and collaborate live on an interactive digital chalkboard. Store snapshots of the collaboration process.</p>
+      </div>
+    </div>
+  </div>
+  <div ng-click="go('/analyze')" class="col-md-4">
+    <div class="card">
+      <div class="card-body text-center">
+        <div class="link-title">Analyze</div>
+        <i class="mt-2 fa fa-edit"></i>
+        <p class="mt-4">Analyze, update and edit existing lexical entries.</p>
+      </div>
+    </div>
+  </div>
+  <div ng-click="go('/collaborate')" class="col-md-4">
+    <div class="card">
+      <div class="card-body text-center">
+        <div class="link-title">Collaborate</div>
+        <i class="mt-2 fa fa-users"></i>
+        <p class="mt-4">Join the live chalkboard to collaborate with other project members.</p>
+      </div>
+    </div>
+  </div>
+</div>
