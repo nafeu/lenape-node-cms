@@ -108,6 +108,7 @@
         <button ng-click="setTool('red')" class="btn btn-outline-danger"><i class="fa fa-circle"></i></button>
         <button ng-click="setTool('yellow')" class="btn btn-outline-warning"><i class="fa fa-circle"></i></button>
         <button ng-click="setTool('eraser')" class="btn btn-dark"><i class="fa fa-eraser"></i></button>
+        <button ng-click="clearCanvas()" class="btn btn-dark"><i class="fa fa-refresh"></i></button>
       </div>
     </div>
     <div class="col-md-4">
@@ -118,7 +119,7 @@
     <div class="input-group-prepend">
       <span class="input-group-text">Notes</span>
     </div>
-    <textarea type="text" class="form-control" placeholder="Add any additional notes" ng-model="name"></textarea>
+    <textarea type="text" class="form-control" placeholder="Add any additional notes" ng-model="notes"></textarea>
   </div>
 
 

@@ -22,6 +22,7 @@ module.exports = {
       });
 
       socket.on('drawing', (data) => socket.broadcast.emit('drawing', data));
+      socket.on('clear', () => socket.broadcast.emit('clear'));
 
       socket.on('setLastCanvasState', (data) => {
         lastCanvasState = data;

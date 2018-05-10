@@ -4,7 +4,7 @@ angular.module('myApp.record', ['ngRoute'])
 
 .config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/record', {
-    templateUrl: 'views/record/record.html',
+    templateUrl: 'views/record/recordDetail.html',
     controller: 'RecordCtrl'
   });
 }])
@@ -12,6 +12,7 @@ angular.module('myApp.record', ['ngRoute'])
 .controller('RecordCtrl', ['$scope', 'apiService', 'storageService', function($scope, apiService, storageService) {
   $scope.name = "";
   $scope.audioId = "";
+  $scope.notes = "";
 
   $scope.snapshots = [];
   $scope.snapshotIds = [];
@@ -79,6 +80,14 @@ angular.module('myApp.record', ['ngRoute'])
       $scope.snapshotIds.push(res.data.snapshotId);
       $scope.snapshots.push(encodedImage);
     });
+  }
+
+  $scope.clearCanvas = function() {
+    if (confirm("Are you sure you want to clear the board?")) {
+      clear();
+    } else {
+      // do nothing...
+    }
   }
 
   var record = document.querySelector('.record');
@@ -182,6 +191,7 @@ angular.module('myApp.record', ['ngRoute'])
   }
 
   socket.on('drawing', onDrawingEvent);
+  socket.on('clear', onClearEvent);
 
   socket.emit('getLastCanvasState');
 
@@ -217,6 +227,13 @@ angular.module('myApp.record', ['ngRoute'])
       lineWidth: lineWidth,
       color: color
     });
+  }
+
+  function clear() {
+    socket.emit('clear');
+    context.fillStyle = "black";
+    context.fillRect(0, 0, canvas.width, canvas.height);
+    socket.emit('setLastCanvasState', exportCanvasState());
   }
 
   var scale = window.innerWidth / canvas.getBoundingClientRect().width;
@@ -265,6 +282,11 @@ angular.module('myApp.record', ['ngRoute'])
     var w = canvas.width;
     var h = canvas.height;
     drawLine(data.x0 * w, data.y0 * h, data.x1 * w, data.y1 * h, data.color, data.lineWidth);
+  }
+
+  function onClearEvent() {
+    context.fillStyle = "black";
+    context.fillRect(0, 0, canvas.width, canvas.height);
   }
 
   // make the canvas fill its parent
