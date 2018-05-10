@@ -32,4 +32,14 @@ app.service('apiService', function($http) {
       contentType: false
     });
   }
+
+  this.createSnapshot = function(dataUrl) {
+    var url = "/api/snapshot";
+    return $http.post(url, {dataUrl: dataUrl});
+  }
+
+  this.getSnapshot = function(snapshotId) {
+    var url = "/api/snapshot?snapshotId=" + snapshotId;
+    return $http.get(url);
+  }
 });

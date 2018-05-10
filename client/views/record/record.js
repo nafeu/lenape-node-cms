@@ -14,6 +14,7 @@ angular.module('myApp.record', ['ngRoute'])
   $scope.audioId = "";
 
   $scope.snapshots = [];
+  $scope.snapshotIds = [];
 
   $scope.blob;
   $scope.chalk = {
@@ -28,7 +29,7 @@ angular.module('myApp.record', ['ngRoute'])
       var payload = {
         name: $scope.name,
         audioId: $scope.audioId,
-        snapshots: $scope.snapshots
+        snapshotIds: $scope.snapshotIds
       };
       apiService.createWord(payload).then(function(res){
         alert(JSON.stringify(res));
@@ -38,7 +39,12 @@ angular.module('myApp.record', ['ngRoute'])
 
   $scope.takeSnapshot = function(){
     var encodedImage = exportCanvasState();
-    $scope.snapshots.push(encodedImage);
+    apiService.createSnapshot(encodedImage).then(function(res){
+      console.log("Creating snapshot");
+      console.log(res);
+      $scope.snapshotIds.push(res.data.snapshotId);
+      $scope.snapshots.push(encodedImage);
+    });
   }
 
   var record = document.querySelector('.record');

@@ -4,7 +4,7 @@ var Schema       = mongoose.Schema;
 var WordSchema   = new Schema({
     name: String,
     audioId: String,
-    snapshots: [{
+    snapshotIds: [{
       type: String
     }]
 });

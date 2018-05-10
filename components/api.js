@@ -3,6 +3,7 @@ const router = express.Router()
 const multer = require('multer');
 const mongoose = require('mongoose')
 const Word = require('../models/word');
+const Snapshot = require('../models/snapshot');
 const mongodb = require('mongodb')
 const MongoClient = require('mongodb').MongoClient;
 const ObjectID = require('mongodb').ObjectID;
@@ -53,7 +54,7 @@ module.exports = (io) => {
     var word = new Word();
     word.name = req.body.name;
     word.audioId = req.body.audioId;
-    word.snapshots = req.body.snapshots;
+    word.snapshotIds = req.body.snapshotIds;
 
     // save the word and check for errors
     word.save(function(err) {
@@ -68,16 +69,12 @@ module.exports = (io) => {
   router.get('/words', (req, res) => {
     Word.find({}, function(err, words) {
       res.send(words);
-    })
+    });
   })
 
   router.get('/word', (req, res) => {
     var id = req.query.wordId;
-    console.log(req.query);
-    console.log("WORD ID: ", id);
     Word.findById(id, function(err, word){
-      console.log("FOUND WORD:");
-      console.log(word);
       res.send(word);
     });
   })
@@ -142,6 +139,23 @@ module.exports = (io) => {
 
     downloadStream.on('end', () => {
       res.end();
+    });
+  });
+
+  router.post('/snapshot', (req, res) => {
+    var snapshot = new Snapshot();
+    snapshot.dataUrl = req.body.dataUrl;
+    snapshot.save(function(err) {
+      if (err)
+          res.send(err);
+      res.json({ message: 'Snapshot created!', snapshotId: snapshot._id});
+    });
+  });
+
+  router.get('/snapshot', (req, res) => {
+    var id = req.query.snapshotId;
+    Snapshot.findById(id, function(err, snapshot){
+      res.send(snapshot);
     });
   });
 

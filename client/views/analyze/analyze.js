@@ -27,8 +27,17 @@ angular.module('myApp.analyze', ['ngRoute'])
 .controller('AnalyzeDetailCtrl', ['$scope', '$routeParams', 'apiService', function($scope, $routeParams, apiService) {
   $scope.word = {};
   $scope.audioUrl = "";
+  $scope.snapshots = [];
   apiService.getWord($routeParams.word_id).then(function(res){
     $scope.word = res.data;
     $scope.audioUrl = "/api/audio/" + res.data.audioId;
+    var counter = 0;
+    while (counter < $scope.word.snapshotIds.length) {
+      apiService.getSnapshot($scope.word.snapshotIds[counter]).then(function(res){
+        $scope.snapshots.push(res.data.dataUrl);
+      });
+      counter++;
+    }
   })
+
 }]);
