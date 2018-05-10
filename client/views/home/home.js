@@ -139,9 +139,6 @@ angular.module('myApp.home', ['ngRoute'])
      console.log('getUserMedia not supported on your browser!');
   }
 
-  function numMap(num, in_min, in_max, out_min, out_max) {
-    return (num - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
-  }
 
   (function() {
 
@@ -181,7 +178,7 @@ angular.module('myApp.home', ['ngRoute'])
       context.moveTo(x0, y0);
       context.lineTo(x1, y1);
       context.strokeStyle = color;
-      context.lineWidth = 2;
+      context.lineWidth = 4;
       context.stroke();
       context.closePath();
 
@@ -196,6 +193,8 @@ angular.module('myApp.home', ['ngRoute'])
         y1: y1 / h,
         color: color
       });
+
+      socket.emit('lastDrawing', )
     }
 
     var scale = window.innerWidth / canvas.getBoundingClientRect().width;
@@ -253,7 +252,7 @@ angular.module('myApp.home', ['ngRoute'])
       inMemCtx.drawImage(canvas, 0, 0);
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
-      context.drawImage(inMemCanvas, 0, 0);
+      context.drawImage(inMemCanvas, 0, 0, canvas.width, canvas.height);
       scale = window.innerWidth / canvas.getBoundingClientRect().width
     }
 
