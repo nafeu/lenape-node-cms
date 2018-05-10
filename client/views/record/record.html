@@ -1,0 +1,53 @@
+<style type="text/css">
+
+.whiteboard {
+  height: 100%;
+  width: 100%;
+  border: 1px solid black;
+  display: inline-block;
+}
+
+.color {
+  display: inline-block;
+  height: 48px;
+  width: 48px;
+}
+
+.color.black { background-color: black; }
+.color.red { background-color: red; }
+.color.green { background-color: green; }
+.color.blue { background-color: blue; }
+.color.yellow { background-color: yellow; }
+
+img {
+  border: 1px solid black;
+  max-width: 200px;
+  display: inline-block;
+}
+
+</style>
+
+<input type="text" name="" ng-model="name">
+
+<div id="buttons">
+  <button class="record">Record</button>
+  <button class="stop">Stop</button>
+</div>
+
+<audio id="audio-player" controls="true"></audio>
+
+<canvas class="whiteboard"></canvas>
+
+<div class="colors">
+  <div class="color black"></div>
+  <div class="color red"></div>
+  <div class="color green"></div>
+  <div class="color blue"></div>
+  <div class="color yellow"></div>
+</div>
+
+<button ng-click="takeSnapshot()">Snapshot</button>
+<button ng-click="createWord()">Save</button>
+<br>
+
+<img ng-repeat="snapshot in snapshots" ng-src="{{snapshot}}">
