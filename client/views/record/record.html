@@ -28,7 +28,6 @@ img {
 </style>
 
 <input type="text" name="" ng-model="name">
-<input type="number" min="1" max="20" ng-model="chalk.lineWidth">
 
 <div id="buttons">
   <button class="record">Record</button>
@@ -46,6 +45,8 @@ img {
   <div class="color blue"></div>
   <div class="color yellow"></div>
 </div>
+
+<input type="number" min="1" max="20" ng-model="chalk.lineWidth">
 
 <button ng-click="takeSnapshot()">Snapshot</button>
 <button ng-click="createWord()">Save</button>

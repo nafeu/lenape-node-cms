@@ -10,22 +10,17 @@ app.service('apiService', function($http) {
     return $http.post(url, payload);
   }
 
-  this.getWords = function() {
-    var url = "/api/word";
+  this.getAllWords = function() {
+    var url = "/api/words";
+    return $http.get(url);
+  }
+
+  this.getWord = function(wordId) {
+    var url = "/api/word?wordId=" + wordId;
     return $http.get(url);
   }
 
   this.uploadAudio = function(blob) {
-    // var url = "/api/upload";
-    // var fd = new FormData();
-
-    // fd.append('name', "TESTNAME");
-    // fd.append('file', blob);
-
-    // return $http.post(url, fd, {
-    //   transformRequest: angular.identity,
-    //   headers: { 'Content-Type': undefined }
-    // });
     var fd = new FormData();
     fd.append('name', 'testupload');
     fd.append('track', blob);

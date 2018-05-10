@@ -65,10 +65,21 @@ module.exports = (io) => {
 
   })
 
-  router.get('/word', (req, res) => {
+  router.get('/words', (req, res) => {
     Word.find({}, function(err, words) {
       res.send(words);
     })
+  })
+
+  router.get('/word', (req, res) => {
+    var id = req.query.wordId;
+    console.log(req.query);
+    console.log("WORD ID: ", id);
+    Word.findById(id, function(err, word){
+      console.log("FOUND WORD:");
+      console.log(word);
+      res.send(word);
+    });
   })
 
   router.post('/upload', (req, res) => {
@@ -106,9 +117,9 @@ module.exports = (io) => {
     });
   });
 
-  router.get('/play/:trackID', (req, res) => {
+  router.get('/audio/:audioId', (req, res) => {
     try {
-      var trackID = new ObjectID(req.params.trackID);
+      var audioId = new ObjectID(req.params.audioId);
     } catch(err) {
       return res.status(400).json({ message: "Invalid trackID in URL parameter. Must be a single String of 12 bytes or a string of 24 hex characters" });
     }
@@ -119,7 +130,7 @@ module.exports = (io) => {
       bucketName: 'tracks'
     });
 
-    let downloadStream = bucket.openDownloadStream(trackID);
+    let downloadStream = bucket.openDownloadStream(audioId);
 
     downloadStream.on('data', (chunk) => {
       res.write(chunk);
