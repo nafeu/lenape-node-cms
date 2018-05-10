@@ -191,10 +191,6 @@ html, body {
   display: inline-block;
 }
 
-.colors {
-  position: fixed;
-}
-
 .color {
   display: inline-block;
   height: 48px;
@@ -209,6 +205,7 @@ html, body {
 
 </style>
 
+<input type="text" name="" ng-model="name">
 
 <section class="main-controls">
   <canvas class="visualizer" height="60px"></canvas>
@@ -231,6 +228,11 @@ html, body {
   <div class="color blue"></div>
   <div class="color yellow"></div>
 </div>
+
+<button ng-click="takeSnapshot()">Snapshot</button>
+<button ng-click="createWord()">Save</button>
+
+<img ng-repeat="snapshot in snapshots" ng-src="{{snapshot}}">
 
 <!--
 <button ng-click="createWord()">SUBMIT</button>

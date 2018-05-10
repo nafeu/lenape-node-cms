@@ -52,6 +52,8 @@ module.exports = (io) => {
 
     var word = new Word();
     word.name = req.body.name;
+    word.audioId = req.body.audioId;
+    word.snapshots = req.body.snapshots;
 
     // save the word and check for errors
     word.save(function(err) {
@@ -99,7 +101,7 @@ module.exports = (io) => {
       });
 
       uploadStream.on('finish', () => {
-        return res.status(201).json({ message: "File uploaded successfully, stored under Mongo ObjectID: " + id });
+        return res.status(201).json({ message: "File uploaded successfully, stored under Mongo ObjectID: " + id, audioId: id});
       });
     });
   });

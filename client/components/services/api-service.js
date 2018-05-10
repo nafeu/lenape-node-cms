@@ -5,9 +5,9 @@ app.service('apiService', function($http) {
     return $http.get(url);
   }
 
-  this.createWord = function(word) {
+  this.createWord = function(payload) {
     var url = "/api/word";
-    return $http.post(url, {name: word});
+    return $http.post(url, payload);
   }
 
   this.getWords = function() {
