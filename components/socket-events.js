@@ -14,6 +14,8 @@ module.exports = {
         console.log(`[ socket-events.js ] ${socket.id} disconnected...`)
       });
 
+      socket.on('drawing', (data) => socket.broadcast.emit('drawing', data));
+
     });
   }
 

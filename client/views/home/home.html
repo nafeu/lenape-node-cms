@@ -166,7 +166,49 @@ input[type=checkbox]:checked ~ aside {
   }
 }
 
+/**
+ * Fix user-agent
+ */
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/**
+ * Canvas
+ */
+
+.whiteboard {
+  height: 100%;
+  width: 100%;
+  border: 1px solid black;
+  display: inline-block;
+}
+
+.colors {
+  position: fixed;
+}
+
+.color {
+  display: inline-block;
+  height: 48px;
+  width: 48px;
+}
+
+.color.black { background-color: black; }
+.color.red { background-color: red; }
+.color.green { background-color: green; }
+.color.blue { background-color: blue; }
+.color.yellow { background-color: yellow; }
+
 </style>
+
 
 <section class="main-controls">
   <canvas class="visualizer" height="60px"></canvas>
@@ -179,6 +221,16 @@ input[type=checkbox]:checked ~ aside {
 <section class="sound-clips">
 
 </section>
+
+<canvas class="whiteboard"></canvas>
+
+<div class="colors">
+  <div class="color black"></div>
+  <div class="color red"></div>
+  <div class="color green"></div>
+  <div class="color blue"></div>
+  <div class="color yellow"></div>
+</div>
 
 <!--
 <button ng-click="createWord()">SUBMIT</button>
