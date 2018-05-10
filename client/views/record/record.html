@@ -5,6 +5,7 @@
   width: 100%;
   border: 1px solid black;
   display: inline-block;
+  border-radius: 5px;
 }
 
 .color {
@@ -19,37 +20,114 @@
 .color.blue { background-color: blue; }
 .color.yellow { background-color: yellow; }
 
-img {
+.view-container {
+  padding: 20px;
   border: 1px solid black;
-  max-width: 200px;
+  border-radius: 5px;
+}
+
+#audio-player {
+  width: 100%;
+}
+
+.snapshot-img {
+  width: 100%;
   display: inline-block;
+  padding: 10px;
+  border: 1px solid black;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.snapshot-container {
+  overflow-y: scroll;
 }
 
 </style>
 
-<input type="text" name="" ng-model="name">
+<div class="view-container">
 
-<div id="buttons">
-  <button class="record">Record</button>
-  <button class="stop">Stop</button>
+  <h3>Add New Lexical Entries</h3>
+  <hr>
+
+  <div class="row justify-content-center">
+    <div class="col-md-6 text-center">
+      <p>English Word:</p>
+      <h1>"Word"</h1>
+    </div>
+  </div>
+
+  <h4>Basic Information</h4>
+
+  <div class="input-group mb-3 input-group-lg">
+    <div class="input-group-prepend">
+      <span class="input-group-text">Word</span>
+    </div>
+    <input type="text" class="form-control" placeholder="Enter the Lenape translation" ng-model="name">
+  </div>
+
+  <h4>Record Audio</h4>
+
+  <div class="row mb-3 justify-content-center">
+    <div class="col">
+      <button class="btn btn-lg btn-outline-dark record mr-2"><i class="fa fa-microphone"></i> Record</button>
+      <button class="btn btn-lg btn-outline-dark stop"><i class="fa fa-stop"></i> Stop</button>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col">
+      <audio id="audio-player" controls="true"></audio>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-8">
+      <h4>Chalkboard <span class="badge badge-primary">Live</span></h4>
+    </div>
+    <div class="col-md-4">
+      <h4>Snapshots</h4>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col-md-8">
+      <canvas class="chalkboard"></canvas>
+    </div>
+    <div class="col-md-4 snapshot-container" style="max-height: 200px;">
+      <img class="snapshot-img" ng-repeat="snapshot in snapshots" ng-src="{{snapshot}}">
+    </div>
+  </div>
+  <div class="row mb-3">
+    <div class="col-md-8">
+      <div class="btn-group" role="group" aria-label="Basic example">
+        <button type="button" ng-click="takeSnapshot()" class="btn btn-secondary"><i class="fa fa-camera"></i> Take Snapshot</button>
+<!--         <button><i class="fa-paint-brush"></i></button>
+        <div class="colors">
+          <div class="color white"></div>
+          <div class="color red"></div>
+          <div class="color green"></div>
+          <div class="color blue"></div>
+          <div class="color yellow"></div>
+        </div> -->
+      </div>
+    </div>
+    <div class="col-md-4">
+    </div>
+  </div>
+
+  <div class="input-group mb-3 input-group-lg">
+    <div class="input-group-prepend">
+      <span class="input-group-text">Notes</span>
+    </div>
+    <textarea type="text" class="form-control" placeholder="Add any additional notes" ng-model="name"></textarea>
+  </div>
+
+
+  <input ng-hide="true" type="number" min="1" max="20" ng-model="chalk.lineWidth">
+
+  <button class="btn btn-lg btn-outline-danger mr-2" >Cancel</button>
+  <button class="btn btn-lg btn-outline-success" ng-click="createWord()">Save</button>
+  <br>
+
 </div>
-
-<audio id="audio-player" controls="true"></audio>
-
-<canvas class="chalkboard"></canvas>
-
-<div class="colors">
-  <div class="color white"></div>
-  <div class="color red"></div>
-  <div class="color green"></div>
-  <div class="color blue"></div>
-  <div class="color yellow"></div>
-</div>
-
-<input type="number" min="1" max="20" ng-model="chalk.lineWidth">
-
-<button ng-click="takeSnapshot()">Snapshot</button>
-<button ng-click="createWord()">Save</button>
-<br>
-
-<img ng-repeat="snapshot in snapshots" ng-src="{{snapshot}}">

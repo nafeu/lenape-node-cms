@@ -63,7 +63,7 @@ angular.module('myApp.record', ['ngRoute'])
 
       record.onclick = function() {
         mediaRecorder.start();
-        record.style.background = "red";
+        record.style.borderColor = "red";
 
         stop.disabled = false;
         record.disabled = true;
@@ -71,7 +71,7 @@ angular.module('myApp.record', ['ngRoute'])
 
       stop.onclick = function() {
         mediaRecorder.stop();
-        record.style.background = "";
+        record.style.borderColor = "";
         record.style.color = "";
         // mediaRecorder.requestData();
 
